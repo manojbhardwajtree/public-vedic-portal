@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shree Ganeshaya Namah | Public Vedic Lineage & Panchang Portal</title>
+ <style>
+    body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: radial-gradient(circle at top, #FFF9EE, #FFEBCC, #FFD699); color: #1E242B; }
+    .auspicious-header { background: linear-gradient(180deg, #E02424, #9E0B0B); color: #FFF; text-align: center; padding: 18px 20px; border-bottom: 4px solid #FFCC33; }
+    .ganesha-emblem { width: 54px; height: 54px; margin: 0 auto 6px; border-radius: 50%; border: 2px solid #FFCC33; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #FFCC33; }
+    .mantra-banner { color: #FFCC33; font-weight: 700; font-size: 0.85rem; }
+    .saffron-silk-bar { background: linear-gradient(135deg, #FF9933, #E67300); border-bottom: 2px solid #FFCC33; padding: 12px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+    .membership-badge { background: #FFF; padding: 6px 14px; border-radius: 999px; font-weight: 700; color: #B81414; border: 1px solid #B81414; }
+    .admin-price-box { background: #4A0E0E; color: #FFF; padding: 6px 14px; border-radius: 8px; border: 1px solid #FFCC33; }
+    .admin-price-box input { width: 70px; padding: 4px; text-align: center; font-weight: bold; }
+    .container { max-width: 1100px; margin: 20px auto; padding: 0 16px; }
+    .nav-tabs { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .tab-btn { background: #FFF; border: 1px solid #FFCC33; color: #4A0E0E; padding: 10px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .tab-btn.active, .btn-primary { background: #D91E1E; color: #FFF; border: 1px solid #FFCC33; padding: 9px 15px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .btn-saffron { background: #FF9933; color: #4A0E0E; border: 1px solid #4A0E0E; padding: 9px 15px; border-radius: 8px; font-weight: 800; cursor: pointer; }
+    .frosted-card { background: rgba(255,255,255,0.92); border: 1px solid #FFCC33; border-radius: 14px; padding: 20px; box-shadow: 0 8px 20px rgba(158,11,11,0.1); }
+    .card-header { display: flex; justify-content: space-between; border-bottom: 2px solid #F0D9B5; padding-bottom: 10px; margin-bottom: 16px; }
+    .card-title { color: #B81414; font-size: 1.2rem; font-weight: 800; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 700; color: #4A0E0E; margin-bottom: 4px; }
+    .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #D9B38C; border-radius: 6px; }
+    .member-node { display: inline-block; background: #FFF; border: 2px solid #FF9933; border-left: 5px solid #D91E1E; border-radius: 8px; padding: 10px 14px; margin: 6px; cursor: pointer; }
+    .kundli-layout { display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
+    .vedic-table { width: 100%; border-collapse: collapse; }
+    .vedic-table th { background: #B81414; color: #FFF; padding: 9px; text-align: left; }
+    .vedic-table td { padding: 8px; border-bottom: 1px solid #F0D9B5; }
+  </style>
+
+</head>
+<body>
+
+  <!-- 1. AUSPICIOUS BRIGHT RED & LORD GANESHA HEADER -->
+  <header class="auspicious-header">
+    <div class="ganesha-crest">
+      <div class="ganesha-emblem" title="Lord Ganesha">ॐ</div>
+      <div class="mantra-banner">॥ श्री गणेशाय नमः ॥</div>
+    </div>
+    <h1 class="portal-title">Vedic Family Lineage &amp; Panchang Portal</h1>
+    <p class="portal-subtitle">Create Your Heritage Tree • View North Indian Kundli • Download Daily Panchang</p>
+  </header>
+
+  <!-- 2. GLOSSY SAFFRON SILK BAR (MEMBERSHIP & ADMIN PRICE CONTROL) -->
+  <section class="saffron-silk-bar">
+    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+      <span class="membership-badge" id="planStatus">Current Plan: Free Preview</span>
+      <button class="btn-primary no-print" onclick="togglePlan()">
+        Switch to Pro (<span id="displayPrice">₹199</span>/yr)
+      </button>
+    </div>
+
+    <div class="admin-price-box no-print">
+      <label for="adminPriceInput">Admin Price (₹/yr):</label>
+      <input type="number" id="adminPriceInput" value="199" min="0" onchange="updateAdminPrice()" />
+    </div>
+  </section>
+
+  <!-- 3. MAIN WORKSPACE CONTAINER -->
+  <main class="container">
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs no-print">
+      <button class="tab-btn active" onclick="showTab('lineage', this)">1. Family Lineage Tree</button>
+      <button class="tab-btn" onclick="showTab('kundli', this)">2. North Indian Kundli</button>
+      <button class="tab-btn" onclick="showTab('panchang', this)">3. Daily Panchang</button>
+      <button class="btn-saffron" onclick="handlePrint()">Print / Save PDF</button>
+    </nav>
+
+    <!-- TAB 1: FAMILY LINEAGE TREE -->
+    <section id="tab-lineage" class="frosted-card">
+      <div class="card-header">
+        <h2 class="card-title">My Family Lineage Tree</h2>
+        <span style="font-size:0.85rem; color:#4A0E0E; font-weight:700;">Click any member to inspect Kundli</span>
+      </div>
+
+      <div class="form-grid no-print" style="margin-bottom:18px;">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="memberName" placeholder="e.g., Aarav Sharma" />
+        </div>
+        <div class="form-group">
+          <label>Generation / Relation</label>
+          <select id="memberGen">
+            <option value="Generation 1 (Elders)">Generation 1 (Parents / Elders)</option>
+            <option value="Generation 2 (Self / Spouse)" selected>Generation 2 (Self / Spouse)</option>
+            <option value="Generation 3 (Children)">Generation 3 (Children)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Birth Date</label>
+          <input type="date" id="memberDob" value="1990-05-15" />
+        </div>
+        <div class="form-group">
+          <label>Birth City</label>
+          <input type="text" id="memberCity" placeholder="e.g., Mumbai" />
+        </div>
+        <div class="form-group" style="display:flex; align-items:flex-end;">
+          <button class="btn-primary" style="width:100%;" onclick="addMember()">+ Add to Tree</button>
+        </div>
+      </div>
+
+      <div id="treeContainer"></div>
+    </section>
+
+    <!-- TAB 2: NORTH INDIAN KUNDLI -->
+    <section id="tab-kundli" class="frosted-card" style="display:none;">
+      <div class="card-header">
+        <h2 class="card-title">Janma Kundli — <span id="selectedMemberTitle">Sample Member</span></h2>
+      </div>
+
+      <div class="kundli-layout">
+        <div class="kundli-diamond-box">
+          <svg viewBox="0 0 300 300" width="100%" height="100%">
+            <rect x="2" y="2" width="296" height="296" fill="none" stroke="#B81414" stroke-width="3" />
+            <line x1="0" y1="0" x2="300" y2="300" stroke="#B81414" stroke-width="2" />
+            <line x1="300" y1="0" x2="0" y2="300" stroke="#B81414" stroke-width="2" />
+            <polygon points="150,0 300,150 150,300 0,150" fill="none" stroke="#B81414" stroke-width="2.5" />
+            <text x="150" y="75" text-anchor="middle" font-size="13" font-weight="bold" fill="#4A0E0E">H1: Lagna (Asc)</text>
+            <text x="75" y="45" text-anchor="middle" font-size="12" fill="#1E242B">H2: Sun</text>
+            <text x="38" y="85" text-anchor="middle" font-size="12" fill="#1E242B">H3</text>
+            <text x="75" y="155" text-anchor="middle" font-size="12" fill="#1E242B">H4: Moon</text>
+            <text x="38" y="225" text-anchor="middle" font-size="12" fill="#1E242B">H5</text>
+            <text x="75" y="265" text-anchor="middle" font-size="12" fill="#1E242B">H6</text>
+            <text x="150" y="225" text-anchor="middle" font-size="12" fill="#1E242B">H7: Jup</text>
+            <text x="225" y="265" text-anchor="middle" font-size="12" fill="#1E242B">H8</text>
+            <text x="262" y="225" text-anchor="middle" font-size="12" fill="#1E242B">H9</text>
+            <text x="225" y="155" text-anchor="middle" font-size="12" fill="#1E242B">H10: Sat</text>
+            <text x="262" y="85" text-anchor="middle" font-size="12" fill="#1E242B">H11</text>
+            <text x="225" y="45" text-anchor="middle" font-size="12" fill="#1E242B">H12</text>
+          </svg>
+        </div>
+
+        <div>
+          <table class="vedic-table">
+            <thead>
+              <tr>
+                <th>Vedic Parameter</th>
+                <th>Calculated Detail</th>
+              </tr>
+            </thead>
+            <tbody id="kundliDetailsBody">
+              <tr><td><strong>Birth Date &amp; Place</strong></td><td id="kundliDobCity">1990-05-15 • Mumbai</td></tr>
+              <tr><td><strong>Janma Rashi (Moon Sign)</strong></td><td>Makar (Capricorn)</td></tr>
+              <tr><td><strong>Nakshatra &amp; Pada</strong></td><td>Shravana • Pada 2</td></tr>
+              <tr><td><strong>Current Mahadasha</strong></td><td>Jupiter (Guru) Mahadasha</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: DAILY PANCHANG -->
+    <section id="tab-panchang" class="frosted-card" style="display:none;">
+      <div class="card-header">
+        <h2 class="card-title">Today's Drik Panchang (Mumbai, India)</h2>
+      </div>
+      <table class="vedic-table">
+        <thead>
+          <tr>
+            <th>Panchang Element</th>
+            <th>Details &amp; Timings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Tithi</strong></td><td>Shukla Chaturthi</td></tr>
+          <tr><td><strong>Nakshatra</strong></td><td>Purva Ashadha</td></tr>
+          <tr><td><strong>Yoga &amp; Karana</strong></td><td>Shula Yoga • Vanija Karana</td></tr>
+          <tr><td><strong>Abhijit Muhurta (Auspicious)</strong></td><td>11:58 AM – 12:46 PM</td></tr>
+          <tr><td><strong>Rahu Kaal (Avoid New Starts)</strong></td><td>10:42 AM – 12:12 PM</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script>
+    let isPro = false;
+    let proPrice = 199;
+    let members = JSON.parse(localStorage.getItem('public_vedic_saas_v1')) || [
+      { name: 'Ramesh Sharma', gen: 'Generation 1 (Elders)', dob: '1962-08-10', city: 'Mumbai' },
+      { name: 'Aarav Sharma', gen: 'Generation 2 (Self / Spouse)', dob: '1990-05-15', city: 'Mumbai' }
+    ];
+
+    function updateAdminPrice() {
+      const val = document.getElementById('adminPriceInput').value;
+      proPrice = val ? parseInt(val, 10) : 199;
+      document.getElementById('displayPrice').textContent = '₹' + proPrice;
+      if (isPro) {
+        document.getElementById('planStatus').textContent = 'Current Plan: Pro Pass (₹' + proPrice + '/yr)';
+      }
+    }
+
+    function togglePlan() {
+      isPro = !isPro;
+      document.getElementById('planStatus').textContent = isPro
+        ? 'Current Plan: Pro Pass (₹' + proPrice + '/yr)'
+        : 'Current Plan: Free Preview';
+    }
+
+    function showTab(tabName, btn) {
+      document.getElementById('tab-lineage').style.display = tabName === 'lineage' ? 'block' : 'none';
+      document.getElementById('tab-kundli').style.display = tabName === 'kundli' ? 'block' : 'none';
+      document.getElementById('tab-panchang').style.display = tabName === 'panchang' ? 'block' : 'none';
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    function renderTree() {
+      const container = document.getElementById('treeContainer');
+      const gens = ['Generation 1 (Elders)', 'Generation 2 (Self / Spouse)', 'Generation 3 (Children)'];
+      container.innerHTML = gens.map(g => {
+        const list = members.filter(m => m.gen === g);
+        if (!list.length) return '';
+        return `
+          <div class="lineage-generation">
+            <div class="gen-label">${g}</div>
+            <div class="tree-row">
+              ${list.map(m => `
+                <div class="member-node" onclick="inspectMember('${m.name}', '${m.dob}', '${m.city}')">
+                  <strong>${m.name}</strong><br/>
+                  <small>DOB: ${m.dob} • ${m.city}</small>
+                </div>
+              `).join('')}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function addMember() {
+      if (!isPro && members.length >= 3) {
+        alert('Free Preview allows up to 3 family members. Switch to Pro (₹' + proPrice + '/yr) to add unlimited generations.');
+        return;
+      }
+      const name = document.getElementById('memberName').value.trim();
+      const gen = document.getElementById('memberGen').value;
+      const dob = document.getElementById('memberDob').value;
+      const city = document.getElementById('memberCity').value.trim() || 'Mumbai';
+   if (!name) return alert('Please enter a name.');
+      members.push({ name, gen, dob, city });
+      localStorage.setItem('public_vedic_saas_v1', JSON.stringify(members));
+      document.getElementById('memberName').value = '';
+      renderTree();
+    }
+
+    function inspectMember(name, dob, city) {
+      document.getElementById('selectedMemberTitle').textContent = name;
+      document.getElementById('kundliDobCity').textContent = dob + ' • ' + city;
+      const secondTab = document.querySelectorAll('.tab-btn')[1];
+      showTab('kundli', secondTab);
+    }
+
+    function handlePrint() {
+      if (!isPro) {
+        alert('Print / Save PDF is a Pro feature (₹' + proPrice + '/yr). Click "Switch to Pro" in the saffron bar to test PDF export.');
+        return;
+      }
+      window.print();
+    }
+
+    renderTree();
+  </script>
+</body>
+</html>
