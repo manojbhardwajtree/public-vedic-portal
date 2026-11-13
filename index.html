@@ -59,7 +59,30 @@
     </div>
   </section>
   <div id="pubAuthBar" style="max-width:1100px;margin:16px auto 0;padding:16px;background:linear-gradient(135deg,#FFF3D6,#FFE4B5);border:2px solid #D91E1E;border-radius:12px;box-shadow:0 4px 12px rgba(184,20,20,0.12);text-align:center;">
-    <div id="pubAuthStatus" style="font-weight:800;font-size:1rem;color:#B81414;margin-bottom:10px;">🔒 Guest Mode — Sign Up or Log In to Save Your Lineage Tree</div>
+    <div id="pubAuthStatus" style="font-weight:800;font-size:1rem;color:#B81414;margin-bottom:8px;">🔒 Guest Mode — Sign Up or Log In (Demo: guest@vedic.in / vedic123)</div>
+    <div id="pubAuthInputs" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;">
+      <input id="pubName" type="text" placeholder="Full Name (Sign Up)" style="padding:8px 12px;border:1px solid #D97706;border-radius:6px;background:#FFF;">
+      <input id="pubEmail" type="text" placeholder="Email / Admin ID *" style="padding:8px 12px;border:1px solid #D97706;border-radius:6px;background:#FFF;">
+      <input id="pubPass" type="password" placeholder="Password *" style="padding:8px 12px;border:1px solid #D97706;border-radius:6px;background:#FFF;">
+      <button type="button" onclick="pubAuth('signup')" style="padding:8px 16px;background:#D91E1E;color:#FFF;border:1px solid #FFCC33;border-radius:6px;font-weight:700;cursor:pointer;">Sign Up</button>
+      <button type="button" onclick="pubAuth('login')" style="padding:8px 16px;background:#FF9933;color:#4A0E0E;border:1px solid #4A0E0E;border-radius:6px;font-weight:800;cursor:pointer;">Log In</button>
+    </div>
+    <div id="pubMemberActions" style="display:none;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-top:8px;">
+      <input id="pubNewPass" type="password" placeholder="New Password" style="padding:6px 10px;border:1px solid #D97706;border-radius:6px;background:#FFF;">
+      <button type="button" onclick="pubChangePass()" style="padding:6px 12px;background:#D97706;color:#FFF;border:none;border-radius:6px;font-weight:700;cursor:pointer;">Change Password</button>
+      <button type="button" onclick="pubLogout()" style="padding:6px 14px;background:#4A0E0E;color:#FFF;border:none;border-radius:6px;font-weight:700;cursor:pointer;">Sign Out</button>
+    </div>
+  </div>
+  <script>
+  function pubGetDB(){const db=JSON.parse(localStorage.getItem('pubVedicDB')||'{}');if(!db['admin@vedic.in'])db['admin@vedic.in']={name:'Admin (Manoj)',email:'admin@vedic.in',pass:'Admin@123',role:'admin'};if(!db['guest@vedic.in'])db['guest@vedic.in']={name:'Public Guest',email:'guest@vedic.in',pass:'vedic123',role:'user'};localStorage.setItem('pubVedicDB',JSON.stringify(db));return db;}
+  function pubRender(){pubGetDB();const u=JSON.parse(localStorage.getItem('pubVedicUser')||'null'),adm=document.querySelector('.admin-price-box');document.getElementById('pubAuthStatus').textContent=u?(u.role==='admin'?'🛡️ Admin Mode: '+u.name+' ('+u.email+')':'🙏 Welcome, '+u.name+' ('+u.email+')'):'🔒 Guest Mode — Sign Up or Log In (Demo: guest@vedic.in / vedic123)';document.getElementById('pubAuthInputs').style.display=u?'none':'flex';document.getElementById('pubMemberActions').style.display=u?'flex':'none';if(adm)adm.style.display=(u&&u.role==='admin')?'block':'none';}
+  function pubAuth(m){const n=document.getElementById('pubName').value.trim(),e=document.getElementById('pubEmail').value.trim().toLowerCase(),p=document.getElementById('pubPass').value,db=pubGetDB();if(!e||!p)return alert('Please enter Email/ID and Password.');if(m==='signup'){if(!n)return alert('Please enter your Full Name to Sign Up.');if(db[e])return alert('Account already exists. Please click Log In.');db[e]={name:n,email:e,pass:p,role:'user'};localStorage.setItem('pubVedicDB',JSON.stringify(db));localStorage.setItem('pubVedicUser',JSON.stringify({name:n,email:e,role:'user'}));}else{if(!db[e]||db[e].pass!==p)return alert('Invalid ID or Password.');localStorage.setItem('pubVedicUser',JSON.stringify({name:db[e].name,email:e,role:db[e].role||'user'}));}pubRender();}
+  function pubChangePass(){const np=document.getElementById('pubNewPass').value.trim(),u=JSON.parse(localStorage.getItem('pubVedicUser')||'null'),db=pubGetDB();if(!np)return alert('Enter a new password first.');db[u.email].pass=np;localStorage.setItem('pubVedicDB',JSON.stringify(db));document.getElementById('pubNewPass').value='';alert('Password updated successfully!');}
+  function pubLogout(){localStorage.removeItem('pubVedicUser');pubRender();}
+  document.addEventListener('DOMContentLoaded',pubRender);
+  </script>
+
+  <div id="pubAuthStatus" style="font-weight:800;font-size:1rem;color:#B81414;margin-bottom:10px;">🔒 Guest Mode — Sign Up or Log In to Save Your Lineage Tree</div>
     <div id="pubAuthInputs" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;">
       <input id="pubName" type="text" placeholder="Full Name (Sign Up)" style="padding:8px 12px;border:1px solid #D97706;border-radius:6px;background:#FFF;">
       <input id="pubEmail" type="email" placeholder="Email ID *" style="padding:8px 12px;border:1px solid #D97706;border-radius:6px;background:#FFF;">
